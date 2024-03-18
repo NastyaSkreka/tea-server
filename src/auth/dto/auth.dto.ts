@@ -13,17 +13,5 @@ export class AuthDto {
   
     @IsOptional()
     @IsString()
-    name: string;
-  
-    @IsOptional()
-    @IsString()
-    avatarPath?: string;
-  
-    @IsOptional()
-    @IsString()
     phone?: string;
-  
-    @IsOptional()
-    @IsString()
-    role?: string;
 }
