@@ -7,6 +7,11 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+enum Role {
+    USER
+    ADMIN
+}
+
 model User {
     id        Int      @id @default(autoincrement())
     createdAt DateTime @default(now()) @map("created_at")
@@ -20,5 +25,80 @@ model User {
 
     phone String @default("")
 
-    role String @default("user")
+    role      Role      @default(USER)
+    favorites Product[]
+    orders    Order[]
+    reviews   Review[]
+}
+
+model Product {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    name        String @unique
+    description String
+    price       Int
+    image       String
+    miles       String
+    time        String
+
+    orderItems OrderItem[]
+
+    user   User? @relation(fields: [userId], references: [id])
+    userId Int?  @map("user_id")
+
+    reviews Review[]
+}
+
+model Order {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    status EnumOrderStatus @default(PENDING)
+
+    items OrderItem[]
+
+    user   User @relation(fields: [userId], references: [id])
+    userId Int  @map("user_id")
+}
+
+model OrderItem {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    quantity Int
+    price    Int
+
+    order   Order? @relation(fields: [orderId], references: [id])
+    orderId Int?   @map("order_id")
+
+    product   Product @relation(fields: [productId], references: [id])
+    productId Int     @map("product_id")
+
+    @@map("Order_item")
+}
+
+model Review {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    rating Int
+    text   String
+
+    user   User @relation(fields: [userId], references: [id])
+    userId Int
+
+    product   Product @relation(fields: [productId], references: [id])
+    productId Int     @map("product_id")
+}
+
+enum EnumOrderStatus {
+    PENDING
+    PAYED
+    SHIPPED
+    DELIVERED
 }

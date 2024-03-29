@@ -29,7 +29,7 @@ export class AuthService {
                 password: await hash(dto.password),
                 name: faker.person.firstName(),
                 avatarPath: faker.image.avatar(),
-                phone: faker.phone.number(),
+                phone: dto.phone,
               }
         })
 
@@ -105,5 +105,3 @@ export class AuthService {
         return user;
     }
 }
-
-
