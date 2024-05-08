@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -13,15 +14,23 @@ import { UserService } from './user.service';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from 'src/auth/decorators/user.decorator';
 import { UserDto } from './user.dto';
+import { Role } from 'src/utils/constants';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('profile')
-  @Auth()
+   @Auth()
   async getProfile(@CurrentUser('id') id: number) {
     return this.userService.byId(id);
+  }
+
+  @UsePipes(new ValidationPipe())
+  @Get()
+  @Auth(Role.ADMIN)
+  async getAll() {
+    return this.userService.getAll()
   }
 
   @UsePipes(new ValidationPipe())
@@ -30,6 +39,20 @@ export class UserController {
   @Put('profile')
   async getNewTokens(@CurrentUser('id') id: number, @Body() dto: UserDto) {
     return this.userService.updateProfile(id, dto);
+  }
+
+  @HttpCode(200)
+  @Auth()
+  @Patch('profile/favorites/:productId')
+  async toggleFavorite(@Param('productId') productId: string, @CurrentUser('id') id: number){
+    return this.userService.toggleFavorite(id, +productId)
+  }
+
+  @HttpCode(200)
+  @Delete(':id')
+   @Auth()
+  async deleteProduct(@Param('id') id: string) {
+    return this.userService.delete(+id)
   }
 
 

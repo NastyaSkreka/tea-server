@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
+import { Role } from "src/utils/constants";
 
 export class AuthDto { 
     @IsEmail()
@@ -14,4 +15,8 @@ export class AuthDto {
     @IsOptional()
     @IsString()
     phone?: string;
+
+    @IsOptional()
+    role: Role.ADMIN
+
 }

@@ -3,17 +3,40 @@ import { hash } from 'argon2';
 import { UserDto } from './user.dto';
 import { PrismaService } from 'src/prisma.service';
 import { returnUserObject } from './return-user.object';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
 
     constructor(private prisma: PrismaService) {}
 
-    async byId(id: number) {
+    async getAll() {
+        return this.prisma.user.findMany({
+            select: returnUserObject
+        })
+    }
+
+    async byId(id: number, selectObject: Prisma.UserSelect = {}) {
         const user = await this.prisma.user.findUnique({
             where: { id},  
             select: {
-              ...returnUserObject
+              ...returnUserObject, 
+              favorites: {
+                select: {
+                    id: true, 
+                    name: true, 
+                    price: true, 
+                    image: true,  
+                    slug: true, 
+                    reviews: true,
+                    category: {
+                        select: {
+                            slug: true
+                        }
+                    }
+                },
+              }, 
+              ...selectObject
             }
         })
 
@@ -49,4 +72,50 @@ export class UserService {
         })
     }
 
-}
+
+    async toggleFavorite(userId: number, productId: number) {
+        const user = await this.byId(userId)
+
+        if(!user) throw new NotFoundException('User not found.')
+
+        const isExists = user.favorites.some(product => product.id === productId)
+
+        await this.prisma.user.update({
+            where: {
+                id: user.id
+            }, 
+            data: {
+                favorites: {
+                    [isExists ? 'disconnect' : 'connect']: {
+                       id: productId 
+                    }
+                }
+            }
+        })
+    }
+
+    async delete(id: number) {
+        const reviews = await this.prisma.review.findMany({
+            where: {
+              userId: id,
+            },
+          });
+      
+          // TODO: импортировать из review модуля
+          await this.prisma.review.deleteMany({
+            where: {
+              userId: id,
+            },
+          });
+      
+
+          await this.prisma.user.delete({
+            where: {
+              id,
+            },
+          });
+      
+          return { success: true };
+        }
+    }
+

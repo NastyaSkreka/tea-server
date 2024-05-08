@@ -9,6 +9,8 @@ import {
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { Role } from 'src/utils/constants';
+
 
 @Controller('auth')
 export class AuthController {
