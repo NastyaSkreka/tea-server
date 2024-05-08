@@ -10,6 +10,12 @@ export class UserService {
 
     constructor(private prisma: PrismaService) {}
 
+    async getAll() {
+        return this.prisma.user.findMany({
+            select: returnUserObject
+        })
+    }
+
     async byId(id: number, selectObject: Prisma.UserSelect = {}) {
         const user = await this.prisma.user.findUnique({
             where: { id},  
@@ -21,7 +27,13 @@ export class UserService {
                     name: true, 
                     price: true, 
                     image: true,  
+                    slug: true, 
                     reviews: true,
+                    category: {
+                        select: {
+                            slug: true
+                        }
+                    }
                 },
               }, 
               ...selectObject
@@ -82,4 +94,28 @@ export class UserService {
         })
     }
 
-}
+    async delete(id: number) {
+        const reviews = await this.prisma.review.findMany({
+            where: {
+              userId: id,
+            },
+          });
+      
+          // TODO: импортировать из review модуля
+          await this.prisma.review.deleteMany({
+            where: {
+              userId: id,
+            },
+          });
+      
+
+          await this.prisma.user.delete({
+            where: {
+              id,
+            },
+          });
+      
+          return { success: true };
+        }
+    }
+
