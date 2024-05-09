@@ -1,6 +1,6 @@
 import { applyDecorators, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { Role } from "src/utils/constants";
+import { Role } from "../../../src/utils/constants";
 import { JwtAuthGuard } from "../guards/jwt.quard";
 import { OnlyAdminGuard } from "../guards/admin.quard";
 

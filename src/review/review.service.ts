@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
 import { returnReviewObject } from './return-review.object';
 import { ReviewDto } from './review.dto';
-import { ProductService } from 'src/product/product.service';
+import { PrismaService } from '../prisma.service';
+import { ProductService } from '../product/product.service';
 
 @Injectable()
 export class ReviewService {

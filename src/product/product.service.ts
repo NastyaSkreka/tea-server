@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
 import { productReturnObject, productReturnObjectFullest } from './return-product.object';
 import { ProductDto } from './dto/product.dto';
 import { EnumProductSort, GetAllProductDto } from './dto/get-all.product.dto';
-import { PaginationService } from 'src/pagination/pagination.service';
 import { Prisma } from '@prisma/client';
-import { convertToNumber } from 'src/utils/convert-to-number';
-import { generateSlug } from 'src/utils/generate-slug';
-import { CategoryService } from 'src/category/category.service';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { CategoryService } from '../category/category.service';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { PaginationService } from '../pagination/pagination.service';
+import { PrismaService } from '../prisma.service';
+import { convertToNumber } from '../utils/convert-to-number';
+import { generateSlug } from '../utils/generate-slug';
 
 @Injectable()
 export class ProductService {

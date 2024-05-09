@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { StatisticService } from './statistic.service';
-import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Auth } from '../auth/decorators/auth.decorator';
 
 @Controller('statistic')
 export class StatisticController {

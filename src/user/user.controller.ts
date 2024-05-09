@@ -11,10 +11,10 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { CurrentUser } from 'src/auth/decorators/user.decorator';
 import { UserDto } from './user.dto';
-import { Role } from 'src/utils/constants';
+import { Role } from '../../src/utils/constants';
+import { Auth } from '../auth/decorators/auth.decorator';
+import { CurrentUser } from '../auth/decorators/user.decorator';
 
 @Controller('users')
 export class UserController {

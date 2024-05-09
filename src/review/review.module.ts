@@ -1,12 +1,12 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { ReviewController } from './review.controller';
-import { PrismaService } from 'src/prisma.service';
-import { ProductService } from 'src/product/product.service';
-import { ProductModule } from 'src/product/product.module';
-import { PaginationModule } from 'src/pagination/pagination.module';
-import { CategoryModule } from 'src/category/category.module';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { CategoryModule } from '../category/category.module';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { PaginationModule } from '../pagination/pagination.module';
+import { PrismaService } from '../prisma.service';
+import { ProductModule } from '../product/product.module';
+import { ProductService } from '../product/product.service';
 
 @Module({
   controllers: [ReviewController],

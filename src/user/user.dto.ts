@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsOptional, IsString } from "class-validator";
-import { Role } from "src/utils/constants";
+import { Role } from "../../src/utils/constants";
 
 export class UserDto {
     @IsEmail()
