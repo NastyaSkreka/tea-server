@@ -6,7 +6,6 @@ import {
   HttpCode,
   Param,
   Post,
-  Put,
   Query,
   UploadedFile,
   UseInterceptors,
@@ -15,10 +14,9 @@ import {
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { GetAllProductDto } from './dto/get-all.product.dto';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { ProductDto } from './dto/product.dto';
-import { Role } from 'src/utils/constants';
+import { Role } from '../utils/constants';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Auth } from '../auth/decorators/auth.decorator';
 
 @Controller('products')
 export class ProductController {
@@ -48,7 +46,6 @@ export class ProductController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Auth()
   @Auth(Role.ADMIN)
   @Post()
   @UseInterceptors(FileInterceptor('image'))
