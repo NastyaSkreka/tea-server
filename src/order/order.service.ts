@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class OrderService {
-    constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-    async getAll(userId: number) {
-        return this.prisma.order.findMany({
-            where: {
-                userId
-            }, 
-            orderBy: {
-                createdAt: 'desc'
-            }
-        })
-    }
+  async getAll(userId: number) {
+    return this.prisma.order.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
 }

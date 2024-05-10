@@ -4,14 +4,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
 import { faker } from '@faker-js/faker';
 import { hash, verify } from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { AuthDto } from './dto/auth.dto';
-import { UserService } from 'src/user/user.service';
-import { Role } from 'src/utils/constants';
+import { Role } from '../utils/constants';
+import { PrismaService } from '../prisma.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -38,7 +38,7 @@ export class AuthService {
         name: faker.person.firstName(),
         avatarPath: faker.image.avatar(),
         phone: dto.phone,
-        role: dto.role 
+        role: dto.role,
       },
     });
 
@@ -55,9 +55,9 @@ export class AuthService {
     if (!result) throw new UnauthorizedException('Invalid refresh token');
 
     const user = await this.userService.byId(result.id, {
-      //  role: Role.ADMIN 
-      role: true
-    })
+      //  role: Role.ADMIN
+      role: true,
+    });
 
     const tokens = await this.issueTokens(user.id);
 
@@ -67,7 +67,7 @@ export class AuthService {
     };
   }
 
-  async login(dto: AuthDto ) {
+  async login(dto: AuthDto) {
     const user = await this.validateUser(dto);
     const tokens = await this.issueTokens(user.id);
 
@@ -90,11 +90,11 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  private returnUserFields(user: Partial<User> ) {
+  private returnUserFields(user: Partial<User>) {
     return {
       id: user.id,
       email: user.email,
-      role: user.role
+      role: user.role,
     };
   }
 
