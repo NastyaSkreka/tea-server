@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
-import { Role } from "../../../src/utils/constants";
+import { Role } from "../../utils/constants";
 
 export class AuthDto { 
     @IsEmail()

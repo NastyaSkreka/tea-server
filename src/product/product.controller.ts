@@ -15,9 +15,9 @@ import {
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { GetAllProductDto } from './dto/get-all.product.dto';
-import { Auth } from '../../src/auth/decorators/auth.decorator';
+import { Auth } from '../auth/decorators/auth.decorator';
 import { ProductDto } from './dto/product.dto';
-import { Role } from '../../src/utils/constants';
+import { Role } from '../utils/constants';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')

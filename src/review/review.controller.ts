@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { ReviewDto } from './review.dto';
-import { Role } from '../../src/utils/constants';
+import { Role } from '../utils/constants';
 import { Auth } from '../auth/decorators/auth.decorator';
 import { CurrentUser } from '../auth/decorators/user.decorator';
 

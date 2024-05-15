@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './user.dto';
-import { Role } from '../../src/utils/constants';
+import { Role } from '../utils/constants';
 import { Auth } from '../auth/decorators/auth.decorator';
 import { CurrentUser } from '../auth/decorators/user.decorator';
 
